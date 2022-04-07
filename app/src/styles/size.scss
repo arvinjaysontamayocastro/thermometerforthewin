@@ -1,0 +1,25 @@
+.c-full_screen {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.c-container {
+    max-width: 1300px;
+    margin: 0 auto 0 auto;
+}
+
+.c-100 {
+    width: 100%;
+    float: left;
+}
+.c-50 {
+    width: 50%;
+    float: left;
+}
+
+@media only screen and (max-width: 900px) {
+    .c-50 {
+        width: 100%;
+    }
+}

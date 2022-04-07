@@ -1,0 +1,140 @@
+<div class="c-presentation c-lister">
+    <div class="c-container">
+        <h1 class="c-list-title">Device Dashboard</h1>
+        <div class="c-list">
+            <a *ngFor="let device of devices" class="c-list-card c-card-thermometer">
+                <h2 class="c-title-main">{{device.temperatureReadings.length > 0 ?
+                    device.temperatureReadings[device.temperatureReadings.length - 1].temperature : "-"}} °C</h2>
+                <h1 class="c-title">{{device.deviceCode}}</h1>
+                <div>
+                    <div class="c-icon-value c-cold">
+                        <div class="c-value">{{device.freezingPoint}}</div>
+                        <div class="c-icon"><span class="fa fa-snowflake"></span></div>
+                        <div class="c-description">Freezing</div>
+                    </div>
+                    <div class="c-icon-value c-hot">
+                        <div class="c-value">{{device.boilingPoint}}</div>
+                        <div class="c-icon"><span class="fa fa-fire"></span></div>
+                        <div class="c-description">Boiling</div>
+                    </div>
+                </div>
+                <div>
+                    <button title="Add Temperature" class="c-button" (click)="onAddTemperature(device)"><span class="fa fa-thermometer-2"></span></button>
+                    <button title="Track Device" class="c-button" (click)="onTrackDevice(device)"><span class="fa fa-warning"></span></button>
+                </div>
+            </a>
+        </div>
+        <div class="c-loading" *ngIf="isLoading">
+            <span class="fa fa-spinner fa-spin"></span>
+            Loading devices...
+        </div>
+    </div>
+</div>
+<div class="c-board c-editor" *ngIf="selectedDevice && type === 'addtemperature'">
+    <div class="c-container">
+        <div class="c-card">
+            <div class="c-spinner" *ngIf="isLoading"></div>
+            <form class="c-form" [formGroup]="form" (ngSubmit)="onSaveTemperature()">
+                <h1 class="c-card_title">Manage Device</h1>
+                <div class="c-field_container">
+                    <span class="c-field_label_readonly">Device Id</span>
+                    <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.deviceId}}</span>
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label_readonly">Device Code</span>
+                    <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice
+                        .deviceCode}}</span>
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label_readonly">Freezing Point</span>
+                    <span
+                        class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.freezingPoint}}</span>
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label_readonly">Boiling Point</span>
+                    <span
+                        class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.boilingPoint}}</span>
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label_readonly">Reading History</span>
+                    <span class="c-field_text_readonly c-field_text_readonly_value"
+                        *ngFor="let temperatureReadings of selectedDevice.temperatureReadings">{{temperatureReadings.temperature}}
+                        °C</span>
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Temperature (°C)</span>
+                    <input class="c-field" type="text" formControlName="temperature" placeholder="Temperature" />
+                    <span class="c-field_message_error"
+                        *ngIf="form.get('temperature').invalid && form.get('temperature').touched">Please enter
+                        temperature.</span>
+                </div>
+                <button class="c-button" color="primary" type="submit" *ngIf="!isLoading">
+                    Save Temperature
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="c-board c-editor" *ngIf="selectedDevice && type === 'track'">
+    <div class="c-container">
+        <div class="c-card">
+            <div class="c-spinner" *ngIf="isLoading"></div>
+            <form class="c-form" [formGroup]="trackForm" (ngSubmit)="onSaveTrack()">
+                <h1 class="c-card_title">Track Device</h1>
+                <div class="c-field_container">
+                    <span class="c-field_label_readonly">Device Id</span>
+                    <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.deviceId}}</span>
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Notify when Freezing Reached</span>
+                    <input type="checkbox" formControlName="isReportWhenFreezingReached"
+                        id="isReportWhenFreezingReached" class="c-form-check-input" />
+                    {{this.trackForm.value.isReportWhenFreezingReached}}
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Notify when Boiling Reached</span>
+                    <input type="checkbox" formControlName="isReportWhenBoilingReached" id="isReportWhenBoilingReached"
+                        class="c-form-check-input" />
+                    {{this.trackForm.value.isReportWhenBoilingReached}}
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Notify when Freezing Approaching</span>
+                    <input type="checkbox" formControlName="isReportWhenFreezingApproaching"
+                        id="isReportWhenFreezingApproaching" class="c-form-check-input" />
+                    {{this.trackForm.value.isReportWhenFreezingApproaching}}
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Notify when Boiling Approaching</span>
+                    <input type="checkbox" formControlName="isReportWhenBoilingApproaching"
+                        id="isReportWhenBoilingApproaching" class="c-form-check-input" />
+                    {{this.trackForm.value.isReportWhenBoilingApproaching}}
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Notify when Freezing Once</span>
+                    <input type="checkbox" formControlName="isReportWhenFreezingOnce" id="isReportWhenFreezingOnce"
+                        class="c-form-check-input" />
+                    {{this.trackForm.value.isReportWhenFreezingOnce}}
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Notify when Boiling Once</span>
+                    <input type="checkbox" formControlName="isReportWhenBoilingOnce" id="isReportWhenBoilingOnce"
+                        class="c-form-check-input" />
+                    {{this.trackForm.value.isReportWhenBoilingOnce}}
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Freezing Fluctuation (°C)</span>
+                    <input class="c-field" type="text" formControlName="isReportWhenFreezingFluctuation"
+                        placeholder="Freezing Fluctuation" />
+                </div>
+                <div class="c-field_container">
+                    <span class="c-field_label">Boiling Fluctuation (°C)</span>
+                    <input class="c-field" type="text" formControlName="isReportWhenBoilingFluctuation"
+                        placeholder="Boiling Fluctuation" />
+                </div>
+                <button class="c-button" color="primary" type="submit">
+                    Track Notification
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

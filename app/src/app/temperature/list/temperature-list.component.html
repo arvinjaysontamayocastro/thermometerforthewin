@@ -1,0 +1,77 @@
+<div class="c-board">
+  <div class="c-container">
+    <div class="c-card">
+      <div class="c-spinner" *ngIf="isLoading"></div>
+      <h1 class="c-card_title">Manage Device</h1>
+      <form class="c-form" [formGroup]="form" (ngSubmit)="onSaveTemperature()" *ngIf="selectedDevice">
+        <div class="c-field_container">
+          <span class="c-field_label_readonly">Device Id</span>
+          <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.deviceId}}</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label_readonly">Device Code</span>
+          <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice .deviceCode}}</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label_readonly">Freezing Point</span>
+          <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.freezingPoint}}</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label_readonly">Boiling Point</span>
+          <span class="c-field_text_readonly c-field_text_readonly_value">{{selectedDevice.boilingPoint}}</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label_readonly">Reading History</span>
+          <span class="c-field_text_readonly c-field_text_readonly_value"
+            *ngFor="let temperatureReadings of selectedDevice.temperatureReadings">{{temperatureReadings.temperature}}
+            °C</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label">Temperature (°C)</span>
+          <input class="c-field" type="text" formControlName="temperature" placeholder="Temperature" />
+          <span class="c-field_message_error"
+            *ngIf="form.get('temperature').invalid && form.get('temperature').touched">Please enter temperature.</span>
+        </div>
+        <button class="c-button" color="primary" type="submit" *ngIf="!isLoading">
+          Save Temperature
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="c-presentation">
+  <div class="c-container">
+    <!-- <div class="c-control_bar">
+      <app-search-text [placeholder]="'Search for a country...'" (onSearchTextChanged)="onSearchTextChanged($event)"
+        [searchText]="filters.searchText">
+      </app-search-text>
+      <app-filter-by [placeholder]="'Filter by Region'" (onFilterByChanged)="onFilterByChanged($event)"
+        [filter]="filters.searchRegion" [options]="regions"></app-filter-by>
+    </div> -->
+    <div class="c-list">
+      <a (click)="onSelectDevice(device)" *ngFor="let device of devices" class="c-list-card c-card-thermometer">
+        <h2 class="c-title-main">{{device.temperatureReadings.length > 0 ?
+          device.temperatureReadings[device.temperatureReadings.length - 1].temperature : "-"}} °C</h2>
+        <h1 class="c-title">{{device.deviceCode}}</h1>
+        <div>
+          <div class="c-icon-value c-cold">
+            <div class="c-value">{{device.freezingPoint}}</div>
+            <div class="c-icon"><span class="fa fa-snowflake"></span></div>
+            <div class="c-description">Freezing</div>
+          </div>
+          <div class="c-icon-value c-hot">
+            <div class="c-value">{{device.boilingPoint}}</div>
+            <div class="c-icon"><span class="fa fa-fire"></span></div>
+            <div class="c-description">Boiling</div>
+          </div>
+        </div>
+        <div></div>
+      </a>
+    </div>
+    <div class="c-loading" *ngIf="isLoading">
+      <span class="fa fa-spinner fa-spin"></span>
+      Loading devices...
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="c-board">
+  <div class="c-container">
+    <div class="c-card">
+      <div class="c-spinner" *ngIf="isLoading"></div>
+      <h1 class="c-card_title">{{mode}} Temperature Device</h1>
+      <form class="c-form" [formGroup]="form" (ngSubmit)="onSaveDevice()">
+        <div class="c-field_container">
+          <span class="c-field_label" *ngIf="form.get('deviceCode').value">Device Code</span>
+          <input class="c-field" type="text" formControlName="deviceCode" placeholder="Device Code" />
+          <span class="c-field_message_error"
+            *ngIf="form.get('deviceCode').invalid && form.get('deviceCode').touched">Please enter device code.</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label" *ngIf="form.get('freezingPoint').value">Freezing Point</span>
+          <input class="c-field" type="text" formControlName="freezingPoint" placeholder="Device Code" />
+          <span class="c-field_message_error"
+            *ngIf="form.get('freezingPoint').invalid && form.get('freezingPoint').touched">Please enter freezing point.</span>
+        </div>
+        <div class="c-field_container">
+          <span class="c-field_label" *ngIf="form.get('boilingPoint').value">Boiling Point</span>
+          <input class="c-field" type="text" formControlName="boilingPoint" placeholder="Boiling Point" />
+          <span class="c-field_message_error"
+            *ngIf="form.get('boilingPoint').invalid && form.get('boilingPoint').touched">Please enter boiling point.</span>
+        </div>
+        <button class="c-button" color="primary" type="submit" *ngIf="!isLoading">
+          {{mode}} Temperature Device
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

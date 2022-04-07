@@ -1,0 +1,39 @@
+<div class="c-board">
+    <div class="c-container">
+        <div class="c-card">
+            <div class="c-art-container">
+                <div class="c-art">
+                    <div class="c-thermometer color-{{temperature}}">
+                        <div class="c-reading-container">
+                            <div class="c-reading">{{temperature}} °C</div>
+                            <div class="c-slider">
+                                <input type="range" [(ngModel)]="temperature" orient="vertical" />
+                            </div>
+                        </div>
+                        <div class="c-summary"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="c-description-container">
+                <h1>Coding Challenge: Stack Dynamics Corp</h1>
+                <p>Main functions</p>
+                <ul>
+                    <li>Allow adding of thermometer devices</li>
+                    <li>Allow updating of thermometer devices</li>
+                    <li>Allow adding of temperature readings (simulates external api entry)</li>
+                </ul>
+                <p>Main highlights</p>
+                <ul>
+                    <li>Allow adding of settings for each device for hub connection</li>
+                    <li>Updates the values of all clients upon add, update, add of readings</li>
+                    <li>Adds alerts based on settings</li>
+                </ul>
+                <p>Bonus</p>
+                <ul>
+                    <li>UI</li>
+                </ul>
+                <a href="/device-add" class="c-button c-space-top">Get started</a>
+            </div>
+        </div>
+    </div>
+</div>

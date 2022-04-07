@@ -1,0 +1,52 @@
+.LIGHT {
+  &.c-full_screen {
+    background-color: $LightModeBackground;
+  }
+  .c-header {
+    background-color: $LightModeHeader;
+    color: $LightModeText;
+    box-shadow: 0 0 5px 1px $LightModeShadow;
+    .c-header_logo {
+      color: $LightModeText;
+    }
+    .c-header_list .c-link {
+      color: $LightModeText;
+    }
+  }
+  .c-presentation {
+    color: $LightModeText;
+    .c-link {
+      background-color: $LightModeElements;
+      color: $LightModeText;
+      box-shadow: 0 0 5px 1px $LightModeShadow;
+    }
+  }
+  .c-search, .c-filter_by, .c-list-card, .c-select_options, .c-back {
+    background-color: $LightModeElements;
+  }
+  .c-search input {
+    background-color: transparent;
+    color: $LightModeText;
+  }
+  .c-back {
+    color: $LightModeText;
+  }
+  .c-pill {
+    background-color: $LightModeElements;
+    color: $LightModeText;
+  }
+  .c-card {
+    box-shadow: 0 0 5px 1px $LightModeShadow;
+    color: $LightModeText;
+    .c-field{
+      border: solid 1px $LightModeShadow;
+      background-color: $LightModeElements;
+      color: $LightModeText;
+    }
+    .c-button {
+      border: solid 1px $LightModeShadow;
+      background-color: $LightModeButton;
+      color: $LightModeButtonText;
+    }
+  }
+}
