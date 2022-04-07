@@ -53,8 +53,6 @@ export class DeviceService {
     return this.devices.find(d => { return d.deviceId === deviceId; });
   }
   getDevices() {
-    // devicesPerPage: number, currentPage: number
-    // const queryParams = `?pagesize=${devicesPerPage}&page=${currentPage}`;
     this.http
       .get<any>(BACKEND_URL)//, maxDevices: number + queryParams
       .pipe(
@@ -87,28 +85,7 @@ export class DeviceService {
     return this.devicesUpdated.asObservable();
   }
 
-  // getDevice(id: string) {
-  //   return this.http.get<{
-  //     _id: string;
-  //     title: string;
-  //     content: string;
-  //     imagePath: string;
-  //     creator: string;
-  //   }>(BACKEND_URL + id);
-  //   // return { ...this.devices.find((p) => p.id === id) };
-  // }
-
   updateDevice(device: Device) {
-    // const deviceData = new FormData();
-    // "DeviceCode": "T01",
-    // "BoilingPoint": 100,
-    // "FreezingPoint": 0
-
-    // deviceData.append('DeviceCode', device.deviceCode);
-    // deviceData.append('BoilingPoint', device.boilingPoint.toString());
-    // deviceData.append('FreezingPoint', device.freezingPoint.toString());
-
-    console.log(device);
     this.http
       .put<{ message: string; device: Device }>(
         BACKEND_URL,
@@ -119,16 +96,6 @@ export class DeviceService {
       });
   }
   addDevice(device: Device) {
-    // const deviceData = new FormData();
-    // "DeviceCode": "T01",
-    // "BoilingPoint": 100,
-    // "FreezingPoint": 0
-
-    // deviceData.append('DeviceCode', device.deviceCode);
-    // deviceData.append('BoilingPoint', device.boilingPoint.toString());
-    // deviceData.append('FreezingPoint', device.freezingPoint.toString());
-
-    console.log(device);
     this.http
       .post<{ message: string; device: Device }>(
         BACKEND_URL,
@@ -138,32 +105,4 @@ export class DeviceService {
         this.router.navigate(['/device-list']);
       });
   }
-  // updateDevice(id: string, title: string, content: string, image: File | string) {
-  //   let deviceData: Device | FormData;
-  //   if (typeof (image === 'object')) {
-  //     deviceData = new FormData();
-  //     deviceData.append("id", id);
-  //     deviceData.append('title', title);
-  //     deviceData.append('content', content);
-  //     deviceData.append('image', image, title);
-  //   } else {
-  //     deviceData = {
-  //       id: id,
-  //       title: title,
-  //       content: content,
-  //       imagePath: image.toString(),
-  //       creator: null
-  //     };
-  //   }
-
-  //   this.http
-  //     .put(BACKEND_URL + id, deviceData)
-  //     .subscribe((response) => {
-  //       this.router.navigate(['/']);
-  //     });
-  // }
-  // deleteDevice(deviceId: string) {
-  //   return  this.http
-  //     .delete(BACKEND_URL + deviceId)
-  // }
 }

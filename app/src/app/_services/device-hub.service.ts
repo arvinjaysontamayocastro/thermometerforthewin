@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 import { Subject } from 'rxjs';
 import { CONFIGURATION } from '../_models/app.constants';
-// import { Settings } from '../_models/settings';
 import { Device } from '../_models/device';
 import { DeviceTemperatureReading } from '../_models/deviceTemperatureReading';
 
@@ -41,12 +40,10 @@ export class DeviceHubService {
       }).catch(err => console.log(err));
 
       this.connection.on('AddDevice', (device) => {
-        // console.log('Received', device);
         this.addDevice.next(device);
       });
 
       this.connection.on('UpdateDevice', (device) => {
-        // console.log('Received', device);
         this.updateDevice.next(device);
       });
 
