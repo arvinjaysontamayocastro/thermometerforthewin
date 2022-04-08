@@ -7,6 +7,7 @@ import { Device } from '../../_models/device';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DeviceTemperatureReading } from '../../_models/deviceTemperatureReading';
 import { TemperatureService } from '../../_services/temperature.service';
+import { NotificationService } from 'src/app/_services/notifications.service';
 
 @Component({
   selector: 'app-device-list',
@@ -25,14 +26,9 @@ export class DeviceListComponent implements OnInit {
   type: string;
 
   private devicesSub: Subscription;
-
-  constructor(private deviceService: DeviceService, private temperatureService: TemperatureService, private notificationHubService: NotificationHubService) {
-    
-    this.initialize();
-  }
   temperatureReading: number;
   public isInitialized: boolean = false;
-  public temperatureSubscription: Subscription;
+  public notificationSubscription: Subscription;
 
   public settings: Settings = {
     deviceId: "",
@@ -48,16 +44,17 @@ export class DeviceListComponent implements OnInit {
     isReportWhenFreezingFluctuation: .5,
     isReportWhenBoilingFluctuation: .5,
   };
+  
+
+  constructor(private deviceService: DeviceService, private temperatureService: TemperatureService, private notificationHubService: NotificationHubService, private notificationService: NotificationService) {
+    
+    this.initialize();
+  }
 
   initialize() {
-    // this.settings.boilingPoint = 1;
   }
 
   track() {
-    // this.temperatureHubService.connect(this.settings);
-    // this.temperatureSubscription = this.temperatureHubService.temperatureReadings.subscribe(tr => {
-    //   this.temperatureReading = tr.reading;
-    // });
   }
   ngOnInit() {
     this.deviceService.getDevices();
@@ -157,7 +154,7 @@ export class DeviceListComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.isLoading = true;
+    // this.isLoading = true;
     this.deviceTemperatureReading.deviceId = this.form.value.deviceId;
     this.deviceTemperatureReading.temperature = this.form.value.temperature;
     this.temperatureService.addTemperature(this.deviceTemperatureReading);
@@ -169,7 +166,7 @@ export class DeviceListComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.isLoading = true;
+    // this.isLoading = true;
     this.settings.deviceId = this.trackForm.value.deviceId;
     this.settings.isReportWhenFreezingReached = this.trackForm.value.isReportWhenFreezingReached;
     this.settings.isReportWhenBoilingReached = this.trackForm.value.isReportWhenBoilingReached;
@@ -182,14 +179,19 @@ export class DeviceListComponent implements OnInit {
     // this.notificationService.addNotificationSettings(this.settings);
 
     this.notificationHubService.connect(this.settings);
-    // this.temperatureSubscription = this.temperatureHubService.temperatureNotifications.subscribe(tr => {
-    //   console.log(tr);
-    //   // console.log("notifications is " + tr.notifications);
-    //   // this.temperatureReading = tr.reading;
-    // });
-
+    this.notificationSubscription = this.notificationHubService.temperatureNotification.subscribe(tr => {
+      this.notificationService.addAlert(tr.deviceId, tr.message);
+      this.deviceService.addAlert(tr.deviceId, tr.message);
+      // console.log("temperatureNotification");
+      // console.log(tr);
+      // console.log("notifications is " + tr.notifications);
+      // this.temperatureReading = tr.reading;
+    });
 
     this.selectedDevice = null;
     this.form.reset();
+  }
+  toggleWarnings(device: Device) {
+    device.isShowWarnings = device.isShowWarnings ? false : true;
   }
 }

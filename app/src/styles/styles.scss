@@ -374,16 +374,38 @@ p {
   }
 }
 .c-editor {
-  display: block;
-  position: relative;
-  width: 20%;
-  float: left;
+  // display: block;
+  // position: relative;
+  // width: 20%;
+  // float: left;
 }
 .c-lister {
+  // display: block;
+  // position: relative;
+  // width: 80%;
+  // float: left;
+}
+.c-notification-container {
   display: block;
   position: relative;
-  width: 80%;
+  height: 0;
+  width: 100%;
   float: left;
+  overflow: visible;
+  .fa-warning {
+    float: right;
+    padding: 24px;
+  }
+}
+.c-warnings {
+  // border: solid 1px #CCCCCC;
+  margin: 0 12px 12px 12px;
+  .c-warning {
+    padding: 5px 12px;
+    border: solid 1px #CCCCCC;
+    margin-bottom: 5px;
+    border-radius: 12px;
+  }
 }
 .c-card {
   padding: 24px;

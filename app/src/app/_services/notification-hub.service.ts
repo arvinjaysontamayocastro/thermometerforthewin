@@ -15,7 +15,7 @@ export class NotificationHubService {
   connectionEstablished = new Subject<Boolean>();
 
   temperatureReadings = new Subject<Temperature>();
-  alertMessages = new Subject<AlertMessage>();
+  temperatureNotification = new Subject<TemperatureNotification>();
 
   serialize(obj) {
     var str = [];
@@ -38,7 +38,7 @@ export class NotificationHubService {
       .build();
       
       this.connection.start().then(() => {
-        console.log('Hub connection started');
+        console.log('Notification Hub connection started');
         this.connectionEstablished.next(true);
       }).catch(err => console.log(err));
 
@@ -47,9 +47,9 @@ export class NotificationHubService {
       //   this.temperatureReadings.next({ reading });
       // });
 
-      this.connection.on('AlertMessage', (alertMessage) => {
-        console.log('Received', alertMessage);
-        this.alertMessages.next(alertMessage);
+      this.connection.on('AlertTemperature', (temperatureNotification) => {
+        console.log('Received Alert Temperature', temperatureNotification);
+        this.temperatureNotification.next(temperatureNotification);
       });
      }
   }

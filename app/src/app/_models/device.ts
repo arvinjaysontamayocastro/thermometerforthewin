@@ -1,3 +1,4 @@
+import { Message } from "./message";
 import { TemperatureReading } from "./temperatureReading";
 
 export interface Device {
@@ -7,6 +8,9 @@ export interface Device {
     freezingPoint: number,
     boilingPoint: number,
 
-    temperatureReadings: TemperatureReading[]
+    temperatureReadings: TemperatureReading[],
+
+    alertMessages?: Message[],
+    isShowWarnings?: boolean
   }
   

@@ -35,7 +35,7 @@ export class DeviceHubService {
       .build();
       
       this.connection.start().then(() => {
-        console.log('Hub connection started');
+        console.log('Device Hub connection started');
         this.connectionEstablished.next(true);
       }).catch(err => console.log(err));
 

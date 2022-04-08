@@ -3,9 +3,15 @@
         <h1 class="c-list-title">Device Dashboard</h1>
         <div class="c-list">
             <a *ngFor="let device of devices" class="c-list-card c-card-thermometer">
+                <div class="c-notification-container" *ngIf="device.alertMessages">
+                    <span class="fa fa-warning" (click)="toggleWarnings(device)"></span>
+                </div>
                 <h2 class="c-title-main">{{device.temperatureReadings.length > 0 ?
                     device.temperatureReadings[device.temperatureReadings.length - 1].temperature : "-"}} °C</h2>
                 <h1 class="c-title">{{device.deviceCode}}</h1>
+                <div class="c-warnings" *ngIf="device.isShowWarnings">
+                    <div class="c-warning" *ngFor="let warning of device.alertMessages">{{warning.message}}</div>
+                </div>
                 <div>
                     <div class="c-icon-value c-cold">
                         <div class="c-value">{{device.freezingPoint}}</div>

@@ -44,6 +44,22 @@ namespace Server.Controllers
                 Statistics deviceStatistics = _temperatureService.GetStatistics(deviceTemperatureReading.DeviceId);
 
                 _notificationService.AlertTemperature(deviceTemperatureReading.DeviceId, deviceStatistics);
+                //_temperatureService.PushTemperatureNotification(temperatureNotification);
+
+                // Get Statistics
+                //Statistics statistics = _temperatureService.GetStatistics();
+
+                // Process Notificaitons
+                //return _temperatureService.ProcessTemperature(temperature);
+
+                //IHubClients<ITemperatureHubService> isAll = _hubContext.Clients;
+
+                //// _hubContext.Clients.User(user).SendAsync("ReceiveMessage", message);
+
+                //_hubContext.Clients.All.AlertMessage("Message");
+
+                //_hubContext.Clients.All.GetTemperature(temperature.Reading);
+                //retMessage = "Success";
             }
             catch (Exception e)
             {

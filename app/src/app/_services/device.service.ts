@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 import { Device } from '../_models/device';
 import { DeviceHubService } from './device-hub.service';
 import { TemperatureReading } from '../_models/temperatureReading';
+import { Message } from '../_models/message';
 
 const BACKEND_URL = environment.apiUrl + '/device';
 
@@ -104,5 +105,17 @@ export class DeviceService {
       .subscribe((responseData) => {
         this.router.navigate(['/device-list']);
       });
+  }
+  addAlert(deviceId: string, message: string) {
+    var d = this.devices.find(d => { return d.deviceId === deviceId; });
+
+    var m: Message = {
+      message: message
+    };
+    if(!d.alertMessages) {
+      d.alertMessages = [];
+    }
+    d.alertMessages.push(m);
+    this.devicesUpdated.next({ devices: [...this.devices] });
   }
 }

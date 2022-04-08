@@ -90,7 +90,10 @@ namespace Server.Service
                 // second, should not be freezing or boiling
                 && !(statistics.IsFreezingReached || statistics.IsBoilingReached)
                 // third, direction should be towards freezing
-                && (_device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 1].Temperature < _device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 2].Temperature);
+                && (_device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 1].Temperature < _device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 2].Temperature)
+                // fourth, temperature should be 1 degree near
+                // NOTE: improve to use user settings
+                && (statistics.Reading <= statistics.FreezingPoint + 1);
 
             return isFreezingApproaching;
         }
@@ -109,7 +112,10 @@ namespace Server.Service
                 // second, should not be freezing or boiling
                 && !(statistics.IsFreezingReached || statistics.IsBoilingReached)
                 // third, direction should be towards freezing
-                && (_device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 1].Temperature > _device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 2].Temperature);
+                && (_device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 1].Temperature > _device.TemperatureReadings.ToList()[_device.TemperatureReadings.Count - 2].Temperature)
+                // fourth, temperature should be 1 degree near
+                // NOTE: improve to use user settings
+                && (statistics.Reading >= statistics.BoilingPoint - 1);
 
             return isBoilingApproaching;
         }

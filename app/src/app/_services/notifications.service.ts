@@ -32,4 +32,7 @@ export class NotificationService {
         // this.router.navigate(['/device-list']);
       });
   }
+  addAlert(deviceId: string, message: string) {
+    
+  }
 }
